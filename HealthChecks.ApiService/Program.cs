@@ -1,3 +1,6 @@
+using HealthChecks.ApiService.Health;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
@@ -9,8 +12,16 @@ builder.Services.AddProblemDetails();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddSingleton<HealthStatusStore>();
+builder.Services.AddSingleton<HealthMetrics>();
+
+builder.Services.AddSingleton<IHealthCheckPublisher, HealthPublisher>();
+
+builder.Services.Configure<HealthCheckPublisherOptions>(options => { options.Period = TimeSpan.FromSeconds(15); });
+
 var app = builder.Build();
 
+app.Services.GetRequiredService<HealthMetrics>();
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
@@ -39,6 +50,7 @@ app.MapGet("/weatherforecast", () =>
     .WithName("GetWeatherForecast");
 
 app.MapDefaultEndpoints();
+app.MapPrometheusScrapingEndpoint();
 
 app.Run();
 
