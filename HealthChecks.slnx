@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
   <Project Path="HealthChecks.ApiService/HealthChecks.ApiService.csproj" />
   <Project Path="HealthChecks.AppHost/HealthChecks.AppHost.csproj" />
   <Project Path="HealthChecks.ServiceDefaults/HealthChecks.ServiceDefaults.csproj" />
