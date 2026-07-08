@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "HealthChecks.AppHost/HealthChecks.AppHost.csproj"
+  }
+}
