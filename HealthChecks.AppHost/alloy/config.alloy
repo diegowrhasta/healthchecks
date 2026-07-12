@@ -1,0 +1,26 @@
+otelcol.receiver.otlp "default" {
+
+  grpc {}
+
+  http {}
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+
+  output {
+    metrics = [otelcol.exporter.prometheus.default.input]
+    logs    = []
+    traces  = []
+  }
+}
+
+otelcol.exporter.prometheus "default" {
+
+  endpoint = "0.0.0.0:9464"
+}
